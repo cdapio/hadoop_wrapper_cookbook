@@ -44,15 +44,15 @@ default['hadoop']['hadoop_metrics']['ugi.class'] = 'org.apache.hadoop.metrics.sp
 default['hadoop']['hadoop_metrics']['ugi.period'] = '60'
 # hadoop-env.sh
 # Enable JMX
-default['hadoop']['hadoop_env']['hadoop_jmx_base'] = "-Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
-default['hadoop']['hadoop_env']['hadoop_namenode_opts'] = "$HADOOP_JMX_BASE -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8004"
-default['hadoop']['hadoop_env']['hadoop_secondarynamenode_opts'] = "$HADOOP_JMX_BASE -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8005"
-default['hadoop']['hadoop_env']['hadoop_datanode_opts'] = "$HADOOP_JMX_BASE -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8006"
-default['hadoop']['hadoop_env']['hadoop_mapred_home'] = "/usr/lib/hadoop-mapreduce"
+default['hadoop']['hadoop_env']['hadoop_jmx_base'] = '-Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false'
+default['hadoop']['hadoop_env']['hadoop_namenode_opts'] = '$HADOOP_JMX_BASE -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8004'
+default['hadoop']['hadoop_env']['hadoop_secondarynamenode_opts'] = '$HADOOP_JMX_BASE -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8005'
+default['hadoop']['hadoop_env']['hadoop_datanode_opts'] = '$HADOOP_JMX_BASE -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8006'
+default['hadoop']['hadoop_env']['hadoop_mapred_home'] = '/usr/lib/hadoop-mapreduce'
 # yarn-env.sh
-default['hadoop']['yarn_env']['yarn_opts'] = "-Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
-default['hadoop']['yarn_env']['yarn_resourcemanager_opts'] = "$YARN_RESOURCEMANAGER_OPTS -Dcom.sun.management.jmxremote.port=8008"
-default['hadoop']['yarn_env']['yarn_nodemanager_opts'] = "$YARN_NODEMANAGER_OPTS -Dcom.sun.management.jmxremote.port=8009"
+default['hadoop']['yarn_env']['yarn_opts'] = '-Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false'
+default['hadoop']['yarn_env']['yarn_resourcemanager_opts'] = '$YARN_RESOURCEMANAGER_OPTS -Dcom.sun.management.jmxremote.port=8008'
+default['hadoop']['yarn_env']['yarn_nodemanager_opts'] = '$YARN_NODEMANAGER_OPTS -Dcom.sun.management.jmxremote.port=8009'
 
 # HBase
 # hbase-site.xml configs
