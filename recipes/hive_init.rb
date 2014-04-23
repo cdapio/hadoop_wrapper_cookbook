@@ -13,7 +13,7 @@ include_recipe 'hadoop::hive'
 
 dfs = node['hadoop']['core_site']['fs.defaultFS']
 
-ruby_block "initaction-create-hive-hdfs-homedir" do
+ruby_block 'initaction-create-hive-hdfs-homedir' do
   block do
     resources('execute[hive-hdfs-homedir').run_action(:run)
   end
