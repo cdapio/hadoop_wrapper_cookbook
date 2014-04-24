@@ -12,7 +12,7 @@ include_recipe 'hadoop::hbase_master'
 
 dfs = node['hadoop']['core_site']['fs.defaultFS']
 
-if node['hbase']['hbase_site']['hbase.rootdir'] =~ %r{^/|^hdfs://} && node['hbase']['hbase_site']['hbase.cluster.distributed'] == 'true'
+if node['hbase']['hbase_site']['hbase.rootdir'] =~ %r{^/|^hdfs://} && node['hbase']['hbase_site']['hbase.cluster.distributed'].to_s == 'true'
   # bootstrap HDFS for HBase
   ruby_block 'initaction-create-hbase-hdfs-rootdir' do
     block do
