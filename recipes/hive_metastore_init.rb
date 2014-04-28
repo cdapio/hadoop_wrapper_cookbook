@@ -45,3 +45,17 @@ unless scratch_dir == '/tmp/hive-${user.name}'
     not_if "hdfs dfs -test -d #{dfs}/#{node['hive']['hive_site']['hive.exec.scratchdir']}", :user => 'hdfs'
   end
 end
+
+# Get our DB type
+if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.option.ConnectionURL')
+  jdo_array = node['hive']['hive_site']['javax.jdo.option.ConnectionURL'].split(':')
+  db_type = jdo_array[1]
+  case db_type
+  when 'mysql'
+    include_recipe 'database::mysql'
+  when 'postgresql'
+    include_recipe 'database::postgresql'
+  else
+    Chef::Log.info('Only MySQL and PostgreSQL are supported for automatically creating users and databases')
+  end
+end
