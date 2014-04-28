@@ -46,9 +46,10 @@ unless scratch_dir == '/tmp/hive-${user.name}'
   end
 end
 
-# Get our DB type
+# Set up our database
 if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.option.ConnectionURL')
   jdo_array = node['hive']['hive_site']['javax.jdo.option.ConnectionURL'].split(':')
+  hive_uris = node['hive']['hive_site']['hive.metastore.uris'].gsub('thrift://', '').gsub(':9083', '').split(',')
   db_type = jdo_array[1]
   db_name = jdo_array[2].split('/').last
   db_user =
@@ -85,6 +86,18 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
       sql { ::File.open(f_names.last).read }
       action :query
     end
+    hive_uris.each do |hive_host|
+      mysql_database_user "#{db_user}-#{hive_host}" do
+        connection mysql_connection_info
+        username db_user
+        database_name db_name
+        password db_pass
+        host hive_host
+        privileges ["SELECT", "INSERT", "UPDATE", "DELETE", "LOCK TABLES", "EXECUTE"]
+        action :grant
+      end
+    end
+
   when 'postgresql'
     include_recipe 'database::postgresql'
     postgresql_connection_info = {
