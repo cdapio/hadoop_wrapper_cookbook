@@ -50,11 +50,64 @@ end
 if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.option.ConnectionURL')
   jdo_array = node['hive']['hive_site']['javax.jdo.option.ConnectionURL'].split(':')
   db_type = jdo_array[1]
+  db_name = jdo_array[2].split('/').last
+  db_user =
+    if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.option.ConnectionUserName')
+      node['hive']['hive_site']['javax.jdo.option.ConnectionUserName']
+    end
+  db_pass =
+    if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.option.ConnectionPassword')
+      node['hive']['hive_site']['javax.jdo.option.ConnectionPassword']
+    end
+  sql_dir = "/usr/lib/hive/scripts/metastore/upgrade/#{db_type}"
+  f_names = Dir.glob("#{sql_dir}/hive-schema-*").sort_by! {|s| s[/\d+/].to_i}
+
   case db_type
   when 'mysql'
     include_recipe 'database::mysql'
+    mysql_connection_info = {
+      :host     => 'localhost',
+      :username => 'root',
+      :password => node['mysql']['server_root_password']
+    }
+    mysql_database db_name do
+      connection mysql_connection_info
+      action :create
+    end
+    mysql_database_user db_user do
+      connection mysql_connection_info
+      password db_pass
+      action :create
+    end
+    mysql_database 'import-hive-schema' do
+      connection mysql_connection_info
+      database_name db_name
+      sql { ::File.open(f_names.last).read }
+      action :query
+    end
   when 'postgresql'
     include_recipe 'database::postgresql'
+    postgresql_connection_info = {
+      :host     => '127.0.0.1',
+      :port     => node['postgresql']['config']['port'],
+      :username => 'postgres',
+      :password => node['postgresql']['password']['postgres']
+    }
+    postgresql_database db_name do
+      connection postgresql_connection_info
+      action :create
+    end
+    postgresql_database_user db_user do
+      connection postgresql_connection_info
+      password db_pass
+      action :create
+    end
+    postgresql_database 'import-hive-schema' do
+      connection postgresql_connection_info
+      database_name db_name
+      sql { ::File.open(f_names.last).read }
+      action :query
+    end
   else
     Chef::Log.info('Only MySQL and PostgreSQL are supported for automatically creating users and databases')
   end
