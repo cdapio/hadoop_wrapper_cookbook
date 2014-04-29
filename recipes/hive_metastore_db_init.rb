@@ -35,8 +35,7 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
     if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.option.ConnectionPassword')
       node['hive']['hive_site']['javax.jdo.option.ConnectionPassword']
     end
-  sql_dir = "/usr/lib/hive/scripts/metastore/upgrade/#{db_type}"
-  f_names = Dir.glob("#{sql_dir}/hive-schema-*").sort_by! {|s| s[/\d+/].to_i}
+  sql_dir = '/usr/lib/hive/scripts/metastore/upgrade'
 
   case db_type
   when 'mysql'
@@ -58,7 +57,7 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
     mysql_database 'import-hive-schema' do
       connection mysql_connection_info
       database_name db_name
-      sql { ::File.open(f_names.last).read }
+      sql lazy { ::File.open(Dir.glob("#{sql_dir}/mysql/hive-schema-*").sort_by! { |s| s[/\d+/].to_i }.last).read }
       action :query
     end
     hive_uris.each do |hive_host|
@@ -93,7 +92,7 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
     postgresql_database 'import-hive-schema' do
       connection postgresql_connection_info
       database_name db_name
-      sql { ::File.open(f_names.last).read }
+      sql lazy { ::File.open(Dir.glob("#{sql_dir}/postgres/hive-schema-*").sort_by! { |s| s[/\d+/].to_i }.last).read }
       action :query
     end
     hive_uris.each do |hive_host|
