@@ -102,7 +102,8 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
         database_name db_name
         password db_pass
         host hive_host
-        privileges %w(SELECT INSERT UPDATE DELETE)
+#        privileges %w(SELECT INSERT UPDATE DELETE)
+        privileges [:all]
         action :grant
       end
     end
