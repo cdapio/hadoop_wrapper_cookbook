@@ -103,7 +103,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision  :shell, :inline => 'test -x /usr/bin/apt-get && sudo apt-get update ; exit 0'
 
   config.vm.provision :chef_solo do |chef|
-#    chef.log_level = :debug
     chef.json = {
       :mysql => {
         :server_root_password => 'rootpass',
@@ -129,6 +128,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           'hbase.cluster.distributed' => true
         }
       },
+      :hive => {
+        :hive_site => {
+          'javax.jdo.option.ConnectionURL' => 'jdbc:mysql://localhost/hive?createDatabaseIfNotExist=true',
+          'javax.jdo.option.ConnectionDriverName' => 'com.mysql.jdbc.Driver',
+# Uncomment the following for PostgreSQL and comment the two lines above
+#          'javax.jdo.option.ConnectionURL' => 'jdbc:postgresql://localhost/hive',
+#          'javax.jdo.option.ConnectionDriverName' => 'com.postgresql.Driver',
+          'javax.jdo.option.ConnectionUserName' => 'dbuser',
+          'javax.jdo.option.ConnectionPassword' => 'dbuserpassword',
+          'hive.metastore.uris' => 'thrift://localhost:9083'
+        }
+      },
+      :postgresql => {
+        :password => {
+          :postgres => 'postgrespass'
+        }
+      },
       :zookeeper => {
         :zoocfg => {
           :dataLogDir => '/tmp/zookeeper/logs'
@@ -139,7 +155,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.run_list = [
       "recipe[minitest-handler::default]",
       "recipe[java::default]",
-      "recipe[hadoop_wrapper::default]"
+      "recipe[hadoop_wrapper::default]",
+      "recipe[mysql::server]",
+      "recipe[postgresql::server]",
+      "recipe[hadoop_wrapper::hive_metastore_db_init]"
     ]
   end
 end
