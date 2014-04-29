@@ -129,6 +129,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           'hbase.cluster.distributed' => true
         }
       },
+      :hive => {
+        :hive_site => {
+          'javax.jdo.option.ConnectionURL' => 'jdbc:mysql://localhost/hive?createDatabaseIfNotExist=true',
+          'javax.jdo.option.ConnectionDriverName' => 'com.mysql.jdbc.Driver',
+          'javax.jdo.option.ConnectionUserName' => 'dbuser',
+          'javax.jdo.option.ConnectionPassword' => 'dbuserpassword',
+          'hive.metastore.uris' => 'thrift://localhost:9083'
+        }
+      },
       :zookeeper => {
         :zoocfg => {
           :dataLogDir => '/tmp/zookeeper/logs'
