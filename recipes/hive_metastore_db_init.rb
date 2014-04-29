@@ -96,6 +96,17 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
       sql { ::File.open(f_names.last).read }
       action :query
     end
+    hive_uris.each do |hive_host|
+      postgresql_database_user "#{db_user}-#{hive_host}" do
+        connection postgresql_connection_info
+        username db_user
+        database_name db_name
+        password db_pass
+        host hive_host
+        privileges ["SELECT", "INSERT", "UPDATE", "DELETE"]
+        action :grant
+      end
+    end
   else
     Chef::Log.info('Only MySQL and PostgreSQL are supported for automatically creating users and databases')
   end
