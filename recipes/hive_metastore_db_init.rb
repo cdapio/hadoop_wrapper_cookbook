@@ -68,7 +68,7 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
         database_name db_name
         password db_pass
         host hive_host
-        privileges ["SELECT", "INSERT", "UPDATE", "DELETE", "LOCK TABLES", "EXECUTE"]
+        privileges ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'LOCK TABLES', 'EXECUTE']
         action :grant
       end
     end
@@ -103,7 +103,7 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
         database_name db_name
         password db_pass
         host hive_host
-        privileges ["SELECT", "INSERT", "UPDATE", "DELETE"]
+        privileges %w(SELECT INSERT UPDATE DELETE)
         action :grant
       end
     end
