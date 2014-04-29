@@ -118,38 +118,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         }
       },
       :hadoop => {
-        :container_executor => {
-          'banned.users' => 'hdfs,yarn,mapred,bin'
-        },
-        :core_site => {
-          'hadoop.security.authentication' => 'kerberos',
-          'hadoop.security.authorization' => 'true'
-        },
         :hdfs_site => {
-          'dfs.datanode.max.xcievers' => 4096
+          'dfs.datanode.max.transfer.threads' => 4096
         }
       },
       :hbase => {
         :hbase_site => {
-          'hbase.security.authentication' => 'kerberos',
-          'hbase.security.authorization' => 'true',
           'hbase.rootdir' => 'hdfs://localhost:8020/hbase',
           'hbase.zookeeper.quorum' => 'localhost',
           'hbase.cluster.distributed' => true
-        }
-      },
-      :krb5 => {
-        :krb5_conf => {
-          :libdefaults => {
-            :default_realm => 'CONTINUUITY.NET'
-          },
-          :realms => {
-            :default_realm_kdcs => [
-              'test-kdc481-1000.dev.continuuity.net'
-            ],
-            :default_realm_admin_server => 'test-kdc481-1000.dev.continuuity.net',
-            :realms => [ 'CONTINUUITY.NET', 'DEV.CONTINUUITY.NET' ]
-          }
         }
       },
       :zookeeper => {
@@ -162,21 +139,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.run_list = [
       "recipe[minitest-handler::default]",
       "recipe[java::default]",
-      "recipe[krb5::default]",
-      "recipe[hadoop_wrapper::jce]",
       "recipe[hadoop_wrapper::default]"
-
-#      "recipe[hadoop::default]",
-#      "recipe[hadoop::hadoop_hdfs_namenode]",
-#      "recipe[hadoop::hadoop_hdfs_datanode]",
-#      "recipe[hadoop::hadoop_yarn_resourcemanager]",
-#      "recipe[hadoop::hadoop_yarn_nodemanager]",
-#      "recipe[hadoop::zookeeper_server]",
-#      "recipe[hadoop::hbase_master]",
-#      "recipe[hadoop::hbase_regionserver]",
-#      "recipe[hadoop::hive_server]",
-#      "recipe[hadoop::hive_metastore]",
-#      "recipe[hadoop::oozie]"
     ]
   end
 end
