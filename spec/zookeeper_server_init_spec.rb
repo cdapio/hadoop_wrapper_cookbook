@@ -11,8 +11,8 @@ describe 'hadoop_wrapper::zookeeper_server_init' do
       end.converge(described_recipe)
     end
 
-    it 'does nothing yet' do
-      expect(chef_run).to do_nothing
+    it 'runs initaction-zookeeper-init execute block' do
+      expect(chef_run).to run_execute('initaction-zookeeper-init')
     end
   end
 end
