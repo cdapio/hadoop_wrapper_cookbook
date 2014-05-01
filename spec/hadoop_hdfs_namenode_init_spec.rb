@@ -10,8 +10,8 @@ describe 'hadoop_wrapper::hadoop_hdfs_namenode_init' do
       end.converge(described_recipe)
     end
 
-    it 'does nothing yet' do
-      expect(chef_run).to do_nothing
+    it 'runs initaction-format-namenode ruby_block' do
+      expect(chef_run).to run_ruby_block('initaction-format-namenode')
     end
   end
 end
