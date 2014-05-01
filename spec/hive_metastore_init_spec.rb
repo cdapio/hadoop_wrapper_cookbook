@@ -12,8 +12,8 @@ describe 'hadoop_wrapper::hive_metastore_init' do
       end.converge(described_recipe)
     end
 
-    it 'does nothing yet' do
-      expect(chef_run).to do_nothing
+    it 'runs initaction-create-hive-hdfs-warehousedir ruby_block' do
+      expect(chef_run).to run_ruby_block('initaction-create-hive-hdfs-warehousedir')
     end
   end
 end
