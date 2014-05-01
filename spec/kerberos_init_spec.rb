@@ -39,7 +39,7 @@ describe 'hadoop_wrapper::kerberos_init' do
 
     %w(modify-etc-default-files kinit-as-hdfs-user).each do |exec|
       it "executes #{exec} resource" do
-        expect(chef_run).to run_resource(exec)
+        expect(chef_run).to run_execute(exec)
       end
     end
   end
