@@ -7,13 +7,10 @@ describe 'hadoop_wrapper::hive_metastore_db_init' do
         node.automatic['domain'] = 'example.com'
         node.automatic['memory']['total'] = '4099400kB'
         node.default['hive']['hive_site']['hive.metastore.uris'] = 'thrift://fauxhai.local:9083'
+        node.default['hive']['hive_site']['javax.jdo.option.ConnectionURL'] = 'jdbc:mysql://localhost:3306/hive'
         stub_command('update-alternatives --display hadoop-conf | grep best | awk \'{print $5}\' | grep /etc/hadoop/conf.chef').and_return(false)
         stub_command('update-alternatives --display hive-conf | grep best | awk \'{print $5}\' | grep /etc/hive/conf.chef').and_return(false)
       end.converge(described_recipe)
-    end
-
-    it 'does nothing yet' do
-      expect(chef_run).to do_nothing
     end
   end
 end
