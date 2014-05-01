@@ -6,6 +6,9 @@ describe 'hadoop_wrapper::kerberos_init' do
       ChefSpec::Runner.new(platform: 'centos', version: 6.4) do |node|
         node.automatic['domain'] = 'example.com'
         node.automatic['memory']['total'] = '4099400kB'
+        node.default['hadoop']['core_site']['hadoop.security.authorization'] = true
+        node.default['hadoop']['core_site']['hadoop.security.authentication'] = 'kerberos'
+        node.default['krb5']['krb5_conf']['realms']['default_realm'] = 'example.com'
       end.converge(described_recipe)
     end
 
