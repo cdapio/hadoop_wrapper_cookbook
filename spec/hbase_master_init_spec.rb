@@ -15,8 +15,10 @@ describe 'hadoop_wrapper::hbase_master_init' do
       end.converge(described_recipe)
     end
 
-    it 'does nothing yet' do
-      expect(chef_run).to do_nothing
+    %w(initaction-create-hbase-hdfs-rootdir initaction-create-hbase-bulkload-stagingdir).each do |name|
+      it "run #{name} ruby_block" do
+        expect(chef_run).to run_ruby_block(name)
+      end
     end
   end
 end
