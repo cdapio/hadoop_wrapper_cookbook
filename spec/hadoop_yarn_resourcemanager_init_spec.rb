@@ -11,8 +11,8 @@ describe 'hadoop_wrapper::hadoop_yarn_resourcemanager_init' do
       end.converge(described_recipe)
     end
 
-    it 'does nothing yet' do
-      expect(chef_run).to do_nothing
+    it 'runs initaction-create-yarn-hdfs-tmpdir ruby_block' do
+      expect(chef_run).to run_ruby_block('initaction-create-yarn-hdfs-tmpdir')
     end
   end
 end
