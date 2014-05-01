@@ -2,7 +2,7 @@
 
 # chefspec task against spec/*_spec.rb
 require 'rspec/core/rake_task'
-# RSpec::Core::RakeTask.new(:chefspec)
+RSpec::Core::RakeTask.new(:chefspec)
 
 # foodcritic rake task
 desc 'Foodcritic linter'
@@ -17,5 +17,4 @@ task :rubocop do
 end
 
 # default tasks are quick, commit tests
-# task :default => %w(foodcritic rubocop chefspec)
-task :default => %w(foodcritic rubocop)
+task :default => %w(foodcritic rubocop chefspec)
