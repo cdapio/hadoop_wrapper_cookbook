@@ -64,6 +64,6 @@ if node['java'].key? 'jdk_version'
     code <<-CODE
       find -name '*.jar' -exec cp '{}' #{jce_dir} \\;
     CODE
-    not_if { ::FileUtils.compare_file("#{jce_tmp}/jce/US_export_policy.jar", "#{jce_dir}/US_export_policy.jar") }
+    not_if "diff -q #{jce_tmp}/jce/US_export_policy.jar #{jce_dir}/US_export_policy.jar"
   end
 end
