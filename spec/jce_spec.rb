@@ -12,8 +12,10 @@ describe 'hadoop_wrapper::jce' do
       end.converge(described_recipe)
     end
 
-    it 'does nothing yet' do
-      expect(chef_run).to do_nothing
+    %w(curl unzip).each do |pkg|
+      it "installs #{pkg} package" do
+        expect(chef_run).to install_package(pkg)
+      end
     end
   end
 end
