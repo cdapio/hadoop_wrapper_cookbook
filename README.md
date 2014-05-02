@@ -35,7 +35,7 @@ There are no attributes specific to this cookbook, however we set many default a
 
 # Usage
 
-Include the relevant recpices in your run-list.
+Include the relevant recipes in your run-list.
 
 
 
