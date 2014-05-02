@@ -12,11 +12,13 @@ This cookbook is a wrapper cookbook for the [Hadoop cookbook](https://github.com
 
 Additional information can be found in the [Hadoop cookbook wiki](https://github.com/continuuity/hadoop_cookbook/wiki/Wrapping-this-cookbook).
 
+
 # Requirements
 
 * Chef 11.4.0+
 * CentOS 6.4+
 * Ubuntu 12.04+
+
 
 # Cookbook Dependencies
 
@@ -26,14 +28,12 @@ java
 hadoop
 krb5_utils (from https://github.com/continuuity/krb5_utils_cookbook)
 
-Attributes
-==========
+# Attributes
 
-There are no attributes specific to this cookbook, however we set many default attributes for the underlying cookbooks in order to have a reasonably configured Hadoop cluster.
+There are no attributes specific to this cookbook, however we set many default attributes for the underlying cookbooks in order to have a reasonably configured Hadoop cluster.  Be sure to look at the attributes files and override as desired.
 
 
-Usage
-=====
+# Usage
 
 Include the relevant recpices in your run-list.
 
