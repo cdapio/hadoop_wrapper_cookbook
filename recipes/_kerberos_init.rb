@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: hadoop_wrapper
-# Recipe:: kerberos_init
+# Recipe:: _kerberos_init
 #
-# Copyright (C) 2013 Continuuity, Inc.
+# Copyright (C) 2013-2014 Continuuity, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.
   }
   include_recipe 'krb5_utils'
   if node['java']['install_flavor'] == 'oracle'
-    include_recipe 'hadoop_wrapper::jce'
+    include_recipe 'hadoop_wrapper::_jce'
   end
   # Hack up /etc/default/hadoop-hdfs-datanode
   execute 'modify-etc-default-files' do

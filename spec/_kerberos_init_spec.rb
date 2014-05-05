@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'hadoop_wrapper::kerberos_init' do
+describe 'hadoop_wrapper::_kerberos_init' do
   context 'on Centos 6.4 x86_64' do
     let(:chef_run) do
       ChefSpec::Runner.new(platform: 'centos', version: 6.4) do |node|
@@ -24,7 +24,7 @@ describe 'hadoop_wrapper::kerberos_init' do
         stub_command('test -e /etc/security/keytabs/zookeeper.service.keytab').and_return(true)
         stub_command('test -e /etc/security/keytabs/yarn.keytab').and_return(true)
         stub_command('test -e /etc/default/hadoop-hdfs-datanode').and_return(true)
-        # Copied from jce_spec.rb
+        # Copied from _jce_spec.rb
         stub_command("echo 'd0c2258c3364120b4dbf7dd1655c967eee7057ac6ae6334b5ea8ceb8bafb9262  /var/chef/cache/jce6.zip' | sha256sum -c - >/dev/null").and_return(true)
         stub_command('test -e /tmp/jce6/jce/US_export_policy.jar').and_return(false)
         stub_command('diff -q /tmp/jce6/jce/US_export_policy.jar /usr/lib/jvm/java/jre/lib/security/US_export_policy.jar').and_return(false)
