@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: hadoop_wrapper
-# Recipe:: _kerberos_init
+# Recipe:: kerberos_init
 #
 # Copyright (C) 2013-2014 Continuuity, Inc.
 #
