@@ -20,8 +20,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Run Multi-Machine environment to test both OSs
   # http://docs.vagrantup.com/v2/multi-machine/index.html
   config.vm.define :centos do |centos|
-    centos.vm.box       = "opscode-centos-6.4"
-    centos.vm.box_url   = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box"
+    centos.vm.box       = "opscode-centos-6.5"
+    centos.vm.box_url   = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.5_provisionerless.box"
     centos.vm.host_name = "hadoop-centos6-berkshelf.local"
     centos.vm.network :private_network, ip: "33.33.33.10"
   end
@@ -119,6 +119,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       :hadoop => {
         :hdfs_site => {
           'dfs.datanode.max.transfer.threads' => 4096
+        },
+        :yarn => {
+          :memory_percent => '75'
         }
       },
       :hbase => {
