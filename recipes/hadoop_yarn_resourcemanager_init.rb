@@ -32,5 +32,5 @@ ruby_block 'initaction-create-yarn-remote-app-log-dir' do
   block do
     resources('execute[yarn-remote-app-log-dir]').run_action(:run)
   end
-  not_if "hdfs dfs -ls #{node['hadoop']['yarn_site']['yarn-remote-app-log-dir']}", :user => 'hdfs'
+  not_if "hdfs dfs -ls #{dfs}#{node['hadoop']['yarn_site']['yarn-remote-app-log-dir']}", :user => 'hdfs'
 end

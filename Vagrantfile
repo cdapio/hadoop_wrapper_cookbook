@@ -150,6 +150,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       },
       :zookeeper => {
         :zoocfg => {
+          'authProvider.1' => 'org.apache.zookeeper.server.auth.SASLAuthenticationProvider',
           :dataLogDir => '/tmp/zookeeper/logs'
         }
       }
@@ -159,9 +160,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "recipe[minitest-handler::default]",
       "recipe[java::default]",
       "recipe[hadoop_wrapper::default]",
-      "recipe[mysql::server]",
-      "recipe[postgresql::server]",
-      "recipe[hadoop_wrapper::hive_metastore_db_init]"
+      "recipe[hadoop_wrapper::zookeeper_server_init]"
     ]
   end
 end
