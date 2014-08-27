@@ -13,6 +13,7 @@ describe 'hadoop_wrapper::kerberos_init' do
         stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^hdfs/fauxhai.local@EXAMPLE.COM'").and_return(true)
         stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^hbase/fauxhai.local@EXAMPLE.COM'").and_return(true)
         stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^hive/fauxhai.local@EXAMPLE.COM'").and_return(true)
+        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^jhs/fauxhai.local@EXAMPLE.COM'").and_return(true)
         stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^mapred/fauxhai.local@EXAMPLE.COM'").and_return(true)
         stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^yarn/fauxhai.local@EXAMPLE.COM'").and_return(true)
         stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^zookeeper/fauxhai.local@EXAMPLE.COM'").and_return(true)
