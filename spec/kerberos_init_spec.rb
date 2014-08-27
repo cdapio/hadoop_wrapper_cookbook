@@ -22,6 +22,7 @@ describe 'hadoop_wrapper::kerberos_init' do
         stub_command('test -e /etc/security/keytabs/hdfs.service.keytab').and_return(true)
         stub_command('test -e /etc/security/keytabs/hbase.service.keytab').and_return(true)
         stub_command('test -e /etc/security/keytabs/hive.service.keytab').and_return(true)
+        stub_command('test -e /etc/security/keytabs/jhs.service.keytab').and_return(true)
         stub_command('test -e /etc/security/keytabs/mapred.service.keytab').and_return(true)
         stub_command('test -e /etc/security/keytabs/yarn.service.keytab').and_return(true)
         stub_command('test -e /etc/security/keytabs/zookeeper.service.keytab').and_return(true)
