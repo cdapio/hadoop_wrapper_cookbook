@@ -17,7 +17,7 @@ if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.
     elsif node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.tmp.dir')
       "#{node['hadoop']['core_site']['hadoop.tmp.dir']}/nm-local-dir"
     else
-      '/tmp/hadoop-yarn/nm-local-dir'
+      'file:///tmp/hadoop-yarn/nm-local-dir'
     end
   default['hadoop']['container_executor']['yarn.nodemanager.log-dirs'] = '/var/log/hadoop-yarn/userlogs'
 
