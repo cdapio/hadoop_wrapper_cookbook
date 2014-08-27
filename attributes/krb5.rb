@@ -110,7 +110,7 @@ if node['zookeeper'].key?('zoocfg') && node['zookeeper']['zoocfg'].key?('authPro
   %w(hbase zookeeper).each do |client|
     default[client]['jaas']['client']['usekeytab'] = 'true'
     default[client]['jaas']['client']['keytab'] = "#{client}/_HOST@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
-    default[client]['jaas']['client']['principal'] = #{node['krb5_utils']['keytabs_dir']}/#{client}.service.keytab"
+    default[client]['jaas']['client']['principal'] = "#{node['krb5_utils']['keytabs_dir']}/#{client}.service.keytab"
     default[client]["#{client}_env"]['jvmflags'] = "-Djava.security.auth.login.config=#{node[client]['conf_dir']}/jaas.conf"
   end
   default['zookeeper']['jaas']['server'] = node['zookeeper']['jaas']['client']
