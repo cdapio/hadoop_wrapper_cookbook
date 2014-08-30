@@ -120,7 +120,8 @@ if node['zookeeper'].key?('zoocfg') && node['zookeeper']['zoocfg'].key?('authPro
   # jaas.conf hbase-env.sh zookeeper-env.sh
   %w(hbase zookeeper).each do |client|
     default[client]['jaas']['client']['usekeytab'] = 'true'
-    default[client]['jaas']['client']['principal'] = "#{client}/_HOST@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
+    # We cannot use _HOST here... https://issues.apache.org/jira/browse/ZOOKEEPER-1422
+    default[client]['jaas']['client']['principal'] = "#{client}/#{node['fqdn']}@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
     default[client]['jaas']['client']['keytab'] = "#{node['krb5_utils']['keytabs_dir']}/#{client}.service.keytab"
     default[client]["#{client}_env"]['jvmflags'] = "-Djava.security.auth.login.config=/etc/#{client}/conf/jaas.conf"
   end
