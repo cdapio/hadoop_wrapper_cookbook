@@ -19,7 +19,8 @@ if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.
   default['krb5_utils']['krb5_user_keytabs']['yarn'] = { 'owner' => 'yarn', 'group' => 'hadoop', 'mode' => '0640' }
 
   # container-executor.cfg
-  default['hadoop']['container_executor']['banned.users'] = 'hdfs,yarn,mapred,bin'
+  default['hadoop']['container_executor']['allowed.system.users'] = 'yarn'
+  default['hadoop']['container_executor']['banned.users'] = 'hdfs,mapred,bin'
   default['hadoop']['container_executor']['min.user.id'] = 500
   default['hadoop']['container_executor']['yarn.nodemanager.linux-container-executor.group'] = 'yarn'
   default['hadoop']['container_executor']['yarn.nodemanager.local-dirs'] =
