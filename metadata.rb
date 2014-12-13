@@ -10,7 +10,7 @@ version '0.1.12'
   depends cb
 end
 
-depends 'hadoop', '>= 1.3.0'
+depends 'hadoop', '>= 1.9.1'
 depends 'mysql', '< 5.0.0'
 depends 'database', '< 2.1.0'
 depends 'krb5', '>= 1.0.0'
