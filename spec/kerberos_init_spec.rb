@@ -10,23 +10,30 @@ describe 'hadoop_wrapper::kerberos_init' do
         node.default['hadoop']['core_site']['hadoop.security.authentication'] = 'kerberos'
         node.default['krb5']['krb5_conf']['realms']['default_realm'] = 'example.com'
         # Keytab stubs
-        %w(HTTP hdfs hbase hive jhs mapred spark yarn zookeeper).each do |kt|
+        %w(hdfs hbase hive jhs mapred spark yarn zookeeper).each do |kt|
           stub_command("test -e /etc/security/keytabs/#{kt}.service.keytab").and_return(true)
         end
         stub_command(/kadmin -w password -q/).and_return(true)
-        stub_command('test -e /etc/security/keytabs/yarn.keytab').and_return(true)
-        #
         stub_command('test -e /etc/default/hadoop-hdfs-datanode').and_return(true)
-        # copied from _jce
-        stub_command(/jce(.+).zip' | sha256sum/).and_return(false)
-        stub_command(%r{test -e /tmp/jce(.+)/}).and_return(false)
-        stub_command(%r{diff -q /tmp/jce(.+)/}).and_return(false)
       end.converge(described_recipe)
     end
 
     %w(hbase hive spark zookeeper).each do |user|
       it "creates #{user} user" do
         expect(chef_run).to create_user(user)
+      end
+    end
+
+    it 'creates HTTP/fauxhai.local principal' do
+      expect(chef_run).to create_krb5_principal('HTTP/fauxhai.local')
+    end
+
+    %w(hdfs hbase hive jhs mapred spark yarn zookeeper).each do |kt|
+      it "creates #{kt}/fauxhai.local principal" do
+        expect(chef_run).to create_krb5_principal("#{kt}/fauxhai.local")
+      end
+      it "creates /etc/security/keytabs/#{kt}.service.keytab" do
+        expect(chef_run).to create_krb5_keytab("/etc/security/keytabs/#{kt}.service.keytab")
       end
     end
 
