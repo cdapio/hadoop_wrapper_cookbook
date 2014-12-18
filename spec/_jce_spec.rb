@@ -26,5 +26,11 @@ describe 'hadoop_wrapper::_jce' do
         expect(chef_run).to install_package(pkg)
       end
     end
+
+    %w(download-jce-zipfile unzip-jce-zipfile copy-jce-files).each do |bash|
+      it "runs bash['#{bash}'] block" do
+        expect(chef_run).to run_bash(bash)
+      end
+    end
   end
 end
