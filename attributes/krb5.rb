@@ -1,8 +1,8 @@
 # Hadoop
 if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.security.authorization') &&
-  node['hadoop']['core_site'].key?('hadoop.security.authentication') &&
-  node['hadoop']['core_site']['hadoop.security.authorization'].to_s == 'true' &&
-  node['hadoop']['core_site']['hadoop.security.authentication'] == 'kerberos'
+   node['hadoop']['core_site'].key?('hadoop.security.authentication') &&
+   node['hadoop']['core_site']['hadoop.security.authorization'].to_s == 'true' &&
+   node['hadoop']['core_site']['hadoop.security.authentication'] == 'kerberos'
 
   include_attribute 'krb5'
   include_attribute 'krb5_utils'
@@ -65,9 +65,9 @@ end
 
 # HBase
 if node['hbase'].key?('hbase_site') && node['hbase']['hbase_site'].key?('hbase.security.authorization') &&
-  node['hbase']['hbase_site'].key?('hbase.security.authentication') &&
-  node['hbase']['hbase_site']['hbase.security.authorization'].to_s == 'true' &&
-  node['hbase']['hbase_site']['hbase.security.authentication'] == 'kerberos'
+   node['hbase']['hbase_site'].key?('hbase.security.authentication') &&
+   node['hbase']['hbase_site']['hbase.security.authorization'].to_s == 'true' &&
+   node['hbase']['hbase_site']['hbase.security.authentication'] == 'kerberos'
 
   include_attribute 'krb5'
   include_attribute 'krb5_utils'
@@ -85,7 +85,7 @@ end
 
 # Hive MetaStore
 if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('hive.metastore.sasl.enabled') &&
-  node['hive']['hive_site']['hive.metastore.sasl.enabled'].to_s == 'true'
+   node['hive']['hive_site']['hive.metastore.sasl.enabled'].to_s == 'true'
 
   include_attribute 'krb5'
   include_attribute 'krb5_utils'
@@ -98,7 +98,7 @@ end
 
 # Hive Server2
 if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('hive.server2.authentication') &&
-  node['hive']['hive_site']['hive.server2.authentication'].upcase == 'KERBEROS'
+   node['hive']['hive_site']['hive.server2.authentication'].upcase == 'KERBEROS'
 
   include_attribute 'krb5'
   include_attribute 'krb5_utils'
@@ -112,7 +112,7 @@ end
 
 # ZooKeeper
 if node['zookeeper'].key?('zoocfg') && node['zookeeper']['zoocfg'].key?('authProvider.1') &&
-  node['zookeeper']['zoocfg']['authProvider.1'] == 'org.apache.zookeeper.server.auth.SASLAuthenticationProvider'
+   node['zookeeper']['zoocfg']['authProvider.1'] == 'org.apache.zookeeper.server.auth.SASLAuthenticationProvider'
 
   # jaas.conf hbase-env.sh zookeeper-env.sh
   %w(hbase zookeeper).each do |client|
