@@ -6,7 +6,6 @@ describe 'hadoop_wrapper::_jce' do
       ChefSpec::Runner.new(platform: 'centos', version: 6.4) do |node|
         node.automatic['domain'] = 'example.com'
         node.automatic['memory']['total'] = '4099400kB'
-
         stub_command(/jce(.+).zip' | sha256sum/).and_return(false)
         stub_command(%r{test -e /tmp/jce(.+)/}).and_return(false)
         stub_command(%r{diff -q /tmp/jce(.+)/}).and_return(false)
