@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
+VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
@@ -20,17 +20,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Run Multi-Machine environment to test both OSs
   # http://docs.vagrantup.com/v2/multi-machine/index.html
   config.vm.define :centos do |centos|
-    centos.vm.box       = "opscode-centos-6.5"
-    centos.vm.box_url   = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.5_provisionerless.box"
-    centos.vm.host_name = "hadoop-centos6-berkshelf.local"
-    centos.vm.network :private_network, ip: "33.33.33.10"
+    centos.vm.box       = 'opscode-centos-6.5'
+    centos.vm.box_url   = 'https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.5_provisionerless.box'
+    centos.vm.host_name = 'hadoop-centos6-berkshelf.local'
+    centos.vm.network :private_network, ip: '33.33.33.10'
   end
 
   config.vm.define :ubuntu do |ubuntu|
-    ubuntu.vm.box       = "opscode-ubuntu-12.04"
-    ubuntu.vm.box_url   = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
-    ubuntu.vm.host_name = "hadoop-ubuntu12-berkshelf.local"
-    ubuntu.vm.network :private_network, ip: "33.33.33.11"
+    ubuntu.vm.box       = 'opscode-ubuntu-12.04'
+    ubuntu.vm.box_url   = 'https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box'
+    ubuntu.vm.host_name = 'hadoop-ubuntu12-berkshelf.local'
+    ubuntu.vm.network :private_network, ip: '33.33.33.11'
   end
 
   # Every Vagrant virtual environment requires a box to build off of.
@@ -78,11 +78,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # information on available options.
   config.vm.provider :virtualbox do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ['modifyvm', :id, '--memory', '2048']
   end
 
-  #config.ssh.max_tries = 40
-  #config.ssh.timeout   = 120
+  # config.ssh.max_tries = 40
+  # config.ssh.timeout   = 120
 
   # The path to the Berksfile to use with Vagrant Berkshelf
   # config.berkshelf.berksfile_path = "./Berksfile"
@@ -135,9 +135,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :hive_site => {
           'javax.jdo.option.ConnectionURL' => 'jdbc:mysql://localhost/hive?createDatabaseIfNotExist=true',
           'javax.jdo.option.ConnectionDriverName' => 'com.mysql.jdbc.Driver',
-# Uncomment the following for PostgreSQL and comment the two lines above
-#          'javax.jdo.option.ConnectionURL' => 'jdbc:postgresql://localhost/hive',
-#          'javax.jdo.option.ConnectionDriverName' => 'com.postgresql.Driver',
+          # Uncomment the following for PostgreSQL and comment the two lines above
+          # 'javax.jdo.option.ConnectionURL' => 'jdbc:postgresql://localhost/hive',
+          # 'javax.jdo.option.ConnectionDriverName' => 'com.postgresql.Driver',
           'javax.jdo.option.ConnectionUserName' => 'dbuser',
           'javax.jdo.option.ConnectionPassword' => 'dbuserpassword',
           'hive.metastore.uris' => 'thrift://localhost:9083'
@@ -157,10 +157,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
 
     chef.run_list = [
-      "recipe[minitest-handler::default]",
-      "recipe[java::default]",
-      "recipe[hadoop_wrapper::default]",
-      "recipe[hadoop_wrapper::zookeeper_server_init]"
+      'recipe[minitest-handler::default]',
+      'recipe[java::default]',
+      'recipe[hadoop_wrapper::default]',
+      'recipe[hadoop_wrapper::zookeeper_server_init]'
     ]
   end
 end
