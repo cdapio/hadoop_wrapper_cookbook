@@ -9,36 +9,18 @@ describe 'hadoop_wrapper::kerberos_init' do
         node.default['hadoop']['core_site']['hadoop.security.authorization'] = true
         node.default['hadoop']['core_site']['hadoop.security.authentication'] = 'kerberos'
         node.default['krb5']['krb5_conf']['realms']['default_realm'] = 'example.com'
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^HTTP/fauxhai.local@EXAMPLE.COM'").and_return(true)
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^hdfs/fauxhai.local@EXAMPLE.COM'").and_return(true)
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^hbase/fauxhai.local@EXAMPLE.COM'").and_return(true)
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^hive/fauxhai.local@EXAMPLE.COM'").and_return(true)
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^jhs/fauxhai.local@EXAMPLE.COM'").and_return(true)
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^mapred/fauxhai.local@EXAMPLE.COM'").and_return(true)
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^yarn/fauxhai.local@EXAMPLE.COM'").and_return(true)
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^zookeeper/fauxhai.local@EXAMPLE.COM'").and_return(true)
-        stub_command("kadmin -w password -q 'list_principals' | grep -v Auth | grep '^yarn@EXAMPLE.COM'").and_return(true)
-        stub_command('test -e /etc/security/keytabs/HTTP.service.keytab').and_return(true)
-        stub_command('test -e /etc/security/keytabs/hdfs.service.keytab').and_return(true)
-        stub_command('test -e /etc/security/keytabs/hbase.service.keytab').and_return(true)
-        stub_command('test -e /etc/security/keytabs/hive.service.keytab').and_return(true)
-        stub_command('test -e /etc/security/keytabs/jhs.service.keytab').and_return(true)
-        stub_command('test -e /etc/security/keytabs/mapred.service.keytab').and_return(true)
-        stub_command('test -e /etc/security/keytabs/yarn.service.keytab').and_return(true)
-        stub_command('test -e /etc/security/keytabs/zookeeper.service.keytab').and_return(true)
+        # Keytab stubs
+        %w(HTTP hdfs hbase hive jhs mapred yarn zookeeper).each do |kt|
+          stub_command("test -e /etc/security/keytabs/#{kt}.service.keytab").and_return(true)
+        end
+        stub_command(/kadmin -w password -q 'list_principals' | grep -v Auth/).and_return(true)
         stub_command('test -e /etc/security/keytabs/yarn.keytab').and_return(true)
+        #
         stub_command('test -e /etc/default/hadoop-hdfs-datanode').and_return(true)
-        # Copied from _jce_spec.rb
-        # JDK 6
-        stub_command("echo 'd0c2258c3364120b4dbf7dd1655c967eee7057ac6ae6334b5ea8ceb8bafb9262  /var/chef/cache/jce6.zip' | sha256sum -c - >/dev/null").and_return(false)
-        stub_command("echo 'd0c2258c3364120b4dbf7dd1655c967eee7057ac6ae6334b5ea8ceb8bafb9262  /home/travis/.chef/cache/jce6.zip' | sha256sum -c - >/dev/null").and_return(false)
-        stub_command('test -e /tmp/jce6/jce/US_export_policy.jar').and_return(false)
-        stub_command('diff -q /tmp/jce6/jce/US_export_policy.jar /usr/lib/jvm/java/jre/lib/security/US_export_policy.jar').and_return(false)
-        # JDK 7
-        stub_command("echo '7a8d790e7bd9c2f82a83baddfae765797a4a56ea603c9150c87b7cdb7800194d  /var/chef/cache/jce7.zip' | sha256sum -c - >/dev/null").and_return(false)
-        stub_command("echo '7a8d790e7bd9c2f82a83baddfae765797a4a56ea603c9150c87b7cdb7800194d  /home/travis/.chef/cache/jce7.zip' | sha256sum -c - >/dev/null").and_return(false)
-        stub_command('test -e /tmp/jce7/jce/US_export_policy.jar').and_return(false)
-        stub_command('diff -q /tmp/jce7/jce/US_export_policy.jar /usr/lib/jvm/java/jre/lib/security/US_export_policy.jar').and_return(false)
+        # copied from _jce
+        stub_command(/jce(.+).zip' | sha256sum/).and_return(false)
+        stub_command(%r{test -e /tmp/jce(.+)/}).and_return(false)
+        stub_command(%r{diff -q /tmp/jce(.+)/}).and_return(false)
       end.converge(described_recipe)
     end
 

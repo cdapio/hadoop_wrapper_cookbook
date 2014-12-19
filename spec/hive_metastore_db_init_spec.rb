@@ -8,13 +8,10 @@ describe 'hadoop_wrapper::hive_metastore_db_init' do
         node.automatic['memory']['total'] = '4099400kB'
         node.default['hive']['hive_site']['hive.metastore.uris'] = 'thrift://fauxhai.local:9083'
         node.default['hive']['hive_site']['javax.jdo.option.ConnectionURL'] = 'jdbc:mysql://localhost:3306/hive'
-        stub_command('update-alternatives --display hadoop-conf | grep best | awk \'{print $5}\' | grep /etc/hadoop/conf.chef').and_return(false)
-        stub_command('update-alternatives --display hive-conf | grep best | awk \'{print $5}\' | grep /etc/hive/conf.chef').and_return(false)
-        # JDK 7
-        stub_command("echo '7a8d790e7bd9c2f82a83baddfae765797a4a56ea603c9150c87b7cdb7800194d  /var/chef/cache/jce7.zip' | sha256sum -c - >/dev/null").and_return(false)
-        stub_command("echo '7a8d790e7bd9c2f82a83baddfae765797a4a56ea603c9150c87b7cdb7800194d  /home/travis/.chef/cache/jce7.zip' | sha256sum -c - >/dev/null").and_return(false)
-        stub_command('test -e /tmp/jce7/jce/US_export_policy.jar').and_return(false)
-        stub_command('diff -q /tmp/jce7/jce/US_export_policy.jar /usr/lib/jvm/java/jre/lib/security/US_export_policy.jar').and_return(false)
+        stub_command(/update-alternatives --display (.+) /).and_return(false)
+        stub_command(/jce(.+).zip' | sha256sum/).and_return(false)
+        stub_command(%r{test -e /tmp/jce(.+)/}).and_return(false)
+        stub_command(%r{diff -q /tmp/jce(.+)/}).and_return(false)
       end.converge(described_recipe)
     end
   end
