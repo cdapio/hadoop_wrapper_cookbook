@@ -53,6 +53,10 @@ if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.
   default['hadoop']['hdfs_site']['dfs.datanode.address'] = '0.0.0.0:1004'
   default['hadoop']['hdfs_site']['dfs.datanode.http.address'] = '0.0.0.0:1006'
 
+  # mapred-site.xml
+  default['hadoop']['mapred_site']['mapreduce.jobhistory.keytab'] = "#{node['krb5_utils']['keytabs_dir']}/jhs.service.keytab"
+  default['hadoop']['mapred_site']['mapreduce.jobhistory.principal'] = "jhs/_HOST@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
+
   # yarn-site.xml
   default['hadoop']['yarn_site']['yarn.resourcemanager.keytab'] = "#{node['krb5_utils']['keytabs_dir']}/yarn.service.keytab"
   default['hadoop']['yarn_site']['yarn.nodemanager.keytab'] = "#{node['krb5_utils']['keytabs_dir']}/yarn.service.keytab"
