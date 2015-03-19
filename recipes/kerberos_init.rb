@@ -2,7 +2,7 @@
 # Cookbook Name:: hadoop_wrapper
 # Recipe:: kerberos_init
 #
-# Copyright © 2013-2014 Cask Data, Inc.
+# Copyright © 2013-2015 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -56,5 +56,13 @@ if node['hbase'].key?('hbase_site') && node['hbase']['hbase_site'].key?('hbase.s
 
   if secure_hadoop_enabled.nil?
     Chef::Application.fatal!('You must enable kerberos in Hadoop or disable kerberos for HBase!')
+  end
+end
+
+if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('hive.metastore.sasl.enabled') &&
+   node['hive']['hive_site']['hive.metastore.sasl.enabled'].to_s == 'true'
+
+  if secure_hadoop_enabled.nil?
+    Chef::Application.fatal!('You must enable kerberos in Hadoop or disable kerberos for Hive!')
   end
 end
