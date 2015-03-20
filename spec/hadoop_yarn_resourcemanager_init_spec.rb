@@ -22,5 +22,9 @@ describe 'hadoop_wrapper::hadoop_yarn_resourcemanager_init' do
     it 'runs initaction-create-yarn-remote-app-log-dir ruby_block' do
       expect(chef_run).to run_ruby_block('initaction-create-yarn-remote-app-log-dir')
     end
+
+    it 'runs initaction-create-yarn-app-mapreduce-am-staging-dir ruby_block' do
+      expect(chef_run).to run_ruby_block('initaction-create-yarn-app-mapreduce-am-staging-dir')
+    end
   end
 end
