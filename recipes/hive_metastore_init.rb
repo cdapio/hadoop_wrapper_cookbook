@@ -27,7 +27,6 @@ ruby_block 'initaction-create-hive-hdfs-warehousedir' do
   block do
     resources('execute[hive-hdfs-warehousedir]').run_action(:run)
   end
-  not_if "hdfs dfs -test -d #{dfs}/#{node['hive']['hive_site']['hive.metastore.warehouse.dir']}", :user => 'hdfs'
 end
 
 scratch_dir =
@@ -42,6 +41,5 @@ unless scratch_dir == '/tmp/hive-${user.name}'
     block do
       resources('execute[hive-hdfs-scratchdir]').run_action(:run)
     end
-    not_if "hdfs dfs -test -d #{dfs}/#{node['hive']['hive_site']['hive.exec.scratchdir']}", :user => 'hdfs'
   end
 end

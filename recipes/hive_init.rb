@@ -27,5 +27,4 @@ ruby_block 'initaction-create-hive-hdfs-homedir' do
   block do
     resources('execute[hive-hdfs-homedir]').run_action(:run)
   end
-  not_if "hdfs dfs -test -d #{dfs}/user/hive", :user => 'hdfs'
 end

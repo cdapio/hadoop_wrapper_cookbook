@@ -25,12 +25,10 @@ ruby_block 'initaction-create-mapreduce-jobhistory-intermediate-done-dir' do
   block do
     resources('execute[mapreduce-jobhistory-intermediate-done-dir]').run_action(:run)
   end
-  not_if "hdfs dfs -ls #{dfs}#{node['hadoop']['mapred_site']['mapreduce.jobhistory.intermediate-done-dir']}", :user => 'hdfs'
 end
 
 ruby_block 'initaction-create-mapreduce-jobhistory-done-dir' do
   block do
     resources('execute[mapreduce-jobhistory-done-dir]').run_action(:run)
   end
-  not_if "hdfs dfs -ls #{dfs}#{node['hadoop']['mapred_site']['mapreduce.jobhistory.done-dir']}", :user => 'hdfs'
 end
