@@ -2,7 +2,7 @@
 # Cookbook Name:: hadoop_wrapper
 # Recipe:: hive_metastore_init
 #
-# Copyright © 2013 Cask Data, Inc.
+# Copyright © 2013-2015 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@
 include_recipe 'hadoop_wrapper::default'
 include_recipe 'hadoop::default'
 include_recipe 'hadoop::hive_metastore'
-
-dfs = node['hadoop']['core_site']['fs.defaultFS']
 
 ruby_block 'initaction-create-hive-hdfs-warehousedir' do
   block do

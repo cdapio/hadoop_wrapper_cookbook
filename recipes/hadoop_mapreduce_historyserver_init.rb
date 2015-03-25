@@ -20,7 +20,6 @@
 include_recipe 'hadoop_wrapper::default'
 include_recipe 'hadoop::hadoop_mapreduce_historyserver'
 
-dfs = node['hadoop']['core_site']['fs.defaultFS']
 ruby_block 'initaction-create-mapreduce-jobhistory-intermediate-done-dir' do
   block do
     resources('execute[mapreduce-jobhistory-intermediate-done-dir]').run_action(:run)
