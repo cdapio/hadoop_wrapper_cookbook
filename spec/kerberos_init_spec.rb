@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'hadoop_wrapper::kerberos_init' do
-  context 'on Centos 6.4 x86_64' do
+  context 'on Centos 6.6 x86_64' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'centos', version: 6.4) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
         node.automatic['domain'] = 'example.com'
         node.automatic['memory']['total'] = '4099400kB'
         node.default['hadoop']['core_site']['hadoop.security.authorization'] = true
