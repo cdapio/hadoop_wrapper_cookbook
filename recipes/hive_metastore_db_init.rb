@@ -21,8 +21,6 @@ include_recipe 'hadoop_wrapper::default'
 include_recipe 'hadoop::default'
 include_recipe 'hadoop::hive_metastore'
 
-Chef::Recipe.send(:include, Hadoop::Helpers)
-
 # Set up our database
 if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.option.ConnectionURL')
   jdo_array = node['hive']['hive_site']['javax.jdo.option.ConnectionURL'].split(':')
@@ -38,7 +36,7 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
     if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.option.ConnectionPassword')
       node['hive']['hive_site']['javax.jdo.option.ConnectionPassword']
     end
-  sql_dir = "#{lib_dir}/hive/scripts/metastore/upgrade"
+  sql_dir = "#{hadoop_lib_dir}/hive/scripts/metastore/upgrade"
 
   case db_type
   when 'mysql'
