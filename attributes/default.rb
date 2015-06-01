@@ -43,8 +43,6 @@ else
   default['hadoop']['yarn_site']['yarn.nodemanager.aux-services.mapreduce_shuffle.class'] = 'org.apache.hadoop.mapred.ShuffleHandler'
 end
 
-# Set FIFO scheduler
-default['hadoop']['yarn_site']['yarn.resourcemanager.scheduler.class'] = 'org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler'
 # hadoop-metrics.properties
 default['hadoop']['hadoop_metrics']['dfs.class'] = 'org.apache.hadoop.metrics.spi.NullContextWithUpdateThread'
 default['hadoop']['hadoop_metrics']['dfs.period'] = '60'
