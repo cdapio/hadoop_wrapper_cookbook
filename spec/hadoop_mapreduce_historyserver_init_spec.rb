@@ -12,6 +12,7 @@ describe 'hadoop_wrapper::hadoop_mapreduce_historyserver_init' do
         stub_command(/jce(.+).zip' | sha256sum/).and_return(false)
         stub_command(%r{test -e /tmp/jce(.+)/}).and_return(false)
         stub_command(%r{diff -q /tmp/jce(.+)/}).and_return(false)
+        stub_command(/test -L /).and_return(false)
       end.converge(described_recipe)
     end
 
