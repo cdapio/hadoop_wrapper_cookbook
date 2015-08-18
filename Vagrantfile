@@ -100,7 +100,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.berkshelf.except = []
 
   # Ubuntu needs this, but global provisioners run first
-  config.vm.provision  :shell, :inline => 'test -x /usr/bin/apt-get && sudo apt-get update ; exit 0'
+  config.vm.provision :shell, :inline => 'test -x /usr/bin/apt-get && sudo apt-get update ; exit 0'
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
