@@ -110,8 +110,8 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('hive.server
 
   # hive-site.xml
   default['hive']['hive_site']['hive.server2.authentication'] = 'KERBEROS'
-  default['hive']['hive_site']['hive.server2.authentication.kerberos.principal'] = "#{node['krb5_utils']['keytabs_dir']}/hive.service.keytab"
-  default['hive']['hive_site']['hive.server2.authentication.kerberos.keytab'] = "hive/_HOST@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
+  default['hive']['hive_site']['hive.server2.authentication.kerberos.keytab'] = "#{node['krb5_utils']['keytabs_dir']}/hive.service.keytab"
+  default['hive']['hive_site']['hive.server2.authentication.kerberos.principal'] = "hive/_HOST@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
 end
 
 # ZooKeeper
