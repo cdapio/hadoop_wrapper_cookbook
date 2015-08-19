@@ -28,5 +28,29 @@ describe 'hadoop_wrapper::hadoop_yarn_resourcemanager_init' do
     it 'runs initaction-create-yarn-app-mapreduce-am-staging-dir ruby_block' do
       expect(chef_run).to run_ruby_block('initaction-create-yarn-app-mapreduce-am-staging-dir')
     end
+
+    it 'runs initaction-copy-hdp22-mapreduce-tarball ruby_block' do
+      expect(chef_run).to run_ruby_block('initaction-copy-hdp22-mapreduce-tarball')
+    end
+  end
+
+  context 'on CDH 5' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+        node.override['hadoop']['distribution'] = 'cdh'
+        node.override['hadoop']['distribution_version'] = '5.3.4'
+        stub_command(/hdfs dfs -/).and_return(false)
+        stub_command(/update-alternatives --display (.+) /).and_return(false)
+        stub_command(/jce(.+).zip' | sha256sum/).and_return(false)
+        stub_command(%r{test -e /tmp/jce(.+)/}).and_return(false)
+        stub_command(%r{diff -q /tmp/jce(.+)/}).and_return(false)
+        stub_command(%r{/sys/kernel/mm/(.*)transparent_hugepage/defrag}).and_return(false)
+        stub_command(/test -L /).and_return(false)
+      end.converge(described_recipe)
+    end
+
+    it 'does not run initaction-copy-hdp22-mapreduce-tarball ruby_block' do
+      expect(chef_run).not_to run_ruby_block('initaction-copy-hdp22-mapreduce-tarball')
+    end
   end
 end
