@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: hadoop_wrapper
-# Recipe:: ha_namenode_primary_init
+# Recipe:: ha_namenode_sharededits_init.rb
 #
-# Copyright © 2013-2015 Cask Data, Inc.
+# Copyright © 2013-2016 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-# This is to ensure that we've been formatted
-include_recipe 'hadoop_wrapper::hadoop_hdfs_namenode_init'
+include_recipe 'hadoop_wrapper::default'
+include_recipe 'hadoop::hadoop_hdfs_namenode'
 
 ruby_block 'initaction-hdfs-namenode-initialize-sharededits' do
   block do
