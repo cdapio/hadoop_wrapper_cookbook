@@ -6,7 +6,7 @@ Documentation:
   Enabled: False
 HashSyntax:
   Enabled: False
-Style/SpaceBeforeFirstArg:
+SpaceBeforeFirstArg:
   Enabled: false
 AsciiComments:
   Enabled: false
