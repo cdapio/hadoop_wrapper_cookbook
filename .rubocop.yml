@@ -1,7 +1,7 @@
 Encoding:
   Enabled: False
 LineLength:
-  Max: 275
+  Max: 600
 Documentation:
   Enabled: False
 HashSyntax:
@@ -9,4 +9,8 @@ HashSyntax:
 SpaceBeforeFirstArg:
   Enabled: false
 AsciiComments:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
   Enabled: false
