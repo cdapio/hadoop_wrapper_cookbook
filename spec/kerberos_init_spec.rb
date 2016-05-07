@@ -10,7 +10,7 @@ describe 'hadoop_wrapper::kerberos_init' do
         node.default['hadoop']['core_site']['hadoop.security.authentication'] = 'kerberos'
         node.default['krb5']['krb5_conf']['realms']['default_realm'] = 'example.com'
         # Keytab stubs
-        %w(HTTP hdfs hbase hive jhs mapred yarn zookeeper).each do |kt|
+        %w(HTTP hdfs hbase hive jhs mapred spark yarn zookeeper).each do |kt|
           stub_command("test -e /etc/security/keytabs/#{kt}.service.keytab").and_return(true)
         end
         stub_command(/kadmin -w password -q 'list_principals' | grep -v Auth/).and_return(true)
