@@ -15,7 +15,6 @@ if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.
   default['krb5_utils']['krb5_service_keytabs']['hdfs'] = { 'owner' => 'hdfs', 'group' => 'hadoop', 'mode' => '0640' }
   default['krb5_utils']['krb5_service_keytabs']['hbase'] = { 'owner' => 'hbase', 'group' => 'hadoop', 'mode' => '0640' }
   default['krb5_utils']['krb5_service_keytabs']['hive'] = { 'owner' => 'hive', 'group' => 'hadoop', 'mode' => '0640' }
-  default['krb5_utils']['krb5_service_keytabs']['jhs'] = { 'owner' => 'mapred', 'group' => 'hadoop', 'mode' => '0640' }
   default['krb5_utils']['krb5_service_keytabs']['mapred'] = { 'owner' => 'mapred', 'group' => 'hadoop', 'mode' => '0640' }
   default['krb5_utils']['krb5_service_keytabs']['spark'] = { 'owner' => 'spark', 'group' => 'hadoop', 'mode' => '0640' }
   default['krb5_utils']['krb5_service_keytabs']['yarn'] = { 'owner' => 'yarn', 'group' => 'hadoop', 'mode' => '0640' }
@@ -69,8 +68,8 @@ if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.
   default['hadoop']['hdfs_site']['dfs.datanode.http.address'] = '0.0.0.0:1006'
 
   # mapred-site.xml
-  default['hadoop']['mapred_site']['mapreduce.jobhistory.keytab'] = "#{node['krb5_utils']['keytabs_dir']}/jhs.service.keytab"
-  default['hadoop']['mapred_site']['mapreduce.jobhistory.principal'] = "jhs/_HOST@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
+  default['hadoop']['mapred_site']['mapreduce.jobhistory.keytab'] = "#{node['krb5_utils']['keytabs_dir']}/mapred.service.keytab"
+  default['hadoop']['mapred_site']['mapreduce.jobhistory.principal'] = "mapred/_HOST@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
 
   # yarn-site.xml
   default['hadoop']['yarn_site']['yarn.resourcemanager.keytab'] = "#{node['krb5_utils']['keytabs_dir']}/yarn.service.keytab"
