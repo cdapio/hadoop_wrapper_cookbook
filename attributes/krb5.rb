@@ -130,7 +130,7 @@ if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.
                                                    end
     # Services
     %w(hbase_master_opts hbase_regionserver_opts).each do |var|
-      override['hbase']['hbase_env'][var] = if node['hbase'].key?('hbase_env') && node['hbase']['hbase_env'].key?(var)
+      override['hbase']['hbase_env'][var] = if node['hbase']['hbase_env'].key?(var)
                                               "#{node['hbase']['hbase_env'][var]} #{jsalc}=/etc/hbase/conf/master_jaas.conf"
                                             else
                                               "#{jsalc}=/etc/hbase/conf/master_jaas.conf"
