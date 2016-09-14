@@ -13,7 +13,7 @@ describe 'hadoop_wrapper::kerberos_init' do
         %w(HTTP hdfs hbase hive jhs mapred spark yarn zookeeper).each do |kt|
           stub_command("test -e /etc/security/keytabs/#{kt}.service.keytab").and_return(true)
         end
-        stub_command(/kadmin -w password -q 'list_principals' | grep -v Auth/).and_return(true)
+        stub_command(/kadmin -w password -q/).and_return(true)
         stub_command('test -e /etc/security/keytabs/yarn.keytab').and_return(true)
         #
         stub_command('test -e /etc/default/hadoop-hdfs-datanode').and_return(true)
