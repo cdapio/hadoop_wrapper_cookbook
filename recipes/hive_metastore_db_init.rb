@@ -27,6 +27,16 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
    node['hive']['hive_site']['javax.jdo.option.ConnectionDriverName'] != 'org.apache.derby.jdbc.EmbeddedDriver'
   jdo_array = node['hive']['hive_site']['javax.jdo.option.ConnectionURL'].split(':')
   hive_uris = node['hive']['hive_site']['hive.metastore.uris'].gsub('thrift://', '').gsub(':9083', '').split(',')
+  # resolve hostnames so that db permissions are also granted for IPs. Mysql fails when hostname looks like an IP.
+  begin
+    require 'resolv'
+    hive_ips = hive_uris.map { |h| Resolv.getaddress(h) }
+    hive_ips.each do |ip|
+      hive_uris.push(ip) unless hive_uris.include?(ip)
+    end
+  rescue LoadError, Resolv::ResolvError => e
+    Chef::Log.warn("Could not resolve hive.metastore.uris, not explicitly granting db permissions for them : #{e.message}")
+  end
   hive_uris.push('localhost')
   db_type = jdo_array[1]
   db_name = jdo_array[3].split('/').last.split('?').first
