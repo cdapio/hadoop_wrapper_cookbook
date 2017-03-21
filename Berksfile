@@ -9,6 +9,7 @@ if Chef::VERSION.to_f < 12.0
   cookbook 'mingw', '< 1.0'
   cookbook 'ohai', '< 4.0'
   cookbook 'openssl', '< 6.0'
+  cookbook 'postgresql', '< 6.0'
   cookbook 'selinux', '< 1.0'
   cookbook 'windows', '< 2.0'
   cookbook 'yum', '< 4.0'
