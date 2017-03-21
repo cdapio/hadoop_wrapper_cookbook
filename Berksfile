@@ -35,4 +35,5 @@ elsif Chef::VERSION.to_f < 12.14
   cookbook 'yum', '< 5.0'
 end
 
+cookbook 'hadoop', git: 'https://github.com/caskdata/hadoop_cookbook.git', branch: 'master'
 metadata
