@@ -2,7 +2,7 @@
 # Cookbook Name:: hadoop_wrapper
 # Attribute:: krb5
 #
-# Copyright © 2013-2016 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -124,7 +124,8 @@ if node['hadoop'].key?('core_site') && node['hadoop']['core_site'].key?('hadoop.
 
   # spark-defaults.conf
   default['spark']['spark_defaults']['spark.history.kerberos.enabled'] = 'true'
-  default['spark']['spark_defaults']['spark.history.kerberos.principal'] = "spark/_HOST@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
+  # We cannot use _HOST here... https://issues.apache.org/jira/browse/SPARK-17121
+  default['spark']['spark_defaults']['spark.history.kerberos.principal'] = "spark/#{node['fqdn']}@#{node['krb5']['krb5_conf']['realms']['default_realm'].upcase}"
   default['spark']['spark_defaults']['spark.history.kerberos.keytab'] = "#{node['krb5_utils']['keytabs_dir']}/spark.service.keytab"
 
   # ZooKeeper
