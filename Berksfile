@@ -5,6 +5,7 @@ if Chef::VERSION.to_f < 12.0
   cookbook 'apt', '< 4.0'
   cookbook 'build-essential', '< 3.0'
   cookbook 'homebrew', '< 3.0'
+  cookbook 'iptables', '< 2.0'
   cookbook 'mingw', '< 1.0'
   cookbook 'ohai', '< 4.0'
   cookbook 'openssl', '< 6.0'
