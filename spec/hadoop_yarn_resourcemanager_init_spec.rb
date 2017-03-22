@@ -11,9 +11,6 @@ describe 'hadoop_wrapper::hadoop_yarn_resourcemanager_init' do
         node.override['hadoop']['distribution_version'] = '2.2.4.2'
         stub_command(/hdfs dfs -/).and_return(false)
         stub_command(/update-alternatives --display (.+) /).and_return(false)
-        stub_command(/jce(.+).zip' | sha256sum/).and_return(false)
-        stub_command(%r{test -e /tmp/jce(.+)/}).and_return(false)
-        stub_command(%r{diff -q /tmp/jce(.+)/}).and_return(false)
         stub_command(%r{/sys/kernel/mm/(.*)transparent_hugepage/defrag}).and_return(false)
         stub_command(/test -L /).and_return(false)
       end.converge(described_recipe)

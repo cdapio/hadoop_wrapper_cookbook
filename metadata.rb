@@ -6,7 +6,7 @@ description      'Hadoop wrapper'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '2.1.0'
 
-%w(apt krb5_utils yum).each do |cb|
+%w(apt yum).each do |cb|
   depends cb
 end
 
@@ -14,7 +14,7 @@ depends 'java', '~> 1.40'
 depends 'hadoop', '>= 2.0.0'
 depends 'mysql', '< 5.0.0'
 depends 'database', '< 2.1.0'
-depends 'krb5', '>= 1.0.0'
+depends 'krb5', '>= 2.2.0'
 
 source_url 'https://github.com/caskdata/hadoop_wrapper_cookbook' if respond_to?(:source_url)
 issues_url 'https://issues.cask.co/browse/COOK/component/10601' if respond_to?(:issues_url)
