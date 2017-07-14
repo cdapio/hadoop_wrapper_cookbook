@@ -36,8 +36,8 @@ Additional information can be found in the
 * java -> 1.40 (JCE needed for Kerberos)
 * hadoop >= 2.0
 * krb5 >= 2.2
-* mysql < 5.0 (Used by Hive Metastore)
-* database < 2.1
+* mysql ~> 8.0 (Used by Hive Metastore)
+* database ~> 6.0 
 
 # Attributes
 
@@ -45,6 +45,9 @@ There are no attributes specific to this cookbook, however we set many default
 attributes for the underlying cookbooks in order to have a reasonably
 configured Hadoop cluster. Be sure to look at the attributes files and
 override as desired.
+
+Note: in order to initialize the Hive Metastore database, root credentials must be
+supplied.  Currently, this must be set in `node['mysql']['server_root_password']`
 
 # Usage
 
