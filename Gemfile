@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
 # env var for travis, modeled after chefspec
-if ENV['CHEF_VERSION']
-  gem 'chef', ENV['CHEF_VERSION']
-end
+gem 'chef', ENV['CHEF_VERSION'] if ENV['CHEF_VERSION']
 
 group :test do
   gem 'berkshelf', '~> 4.0'
