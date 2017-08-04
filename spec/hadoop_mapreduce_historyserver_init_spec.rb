@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'hadoop_wrapper::hadoop_mapreduce_historyserver_init' do
-  context 'on Centos 6.6 x86_64' do
+  context 'on Centos 6.9 x86_64' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
         node.automatic['memory']['total'] = '4099400kB'
         node.override['hadoop']['yarn_site']['yarn-remote-app-log-dir'] = '/tmp/yarn-app-log-dir'

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'hadoop_wrapper::hive_metastore_init' do
-  context 'on Centos 6.6 x86_64' do
+  context 'on Centos 6.9 x86_64' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
         node.automatic['memory']['total'] = '4099400kB'
         stub_command(/hdfs dfs -/).and_return(false)
@@ -24,7 +24,7 @@ describe 'hadoop_wrapper::hive_metastore_init' do
 
   context 'using custom hive.exec.scratchdir' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.override['hive']['hive_site']['hive.exec.scratchdir'] = '/some/path'
         stub_command(/hdfs dfs -/).and_return(false)
         stub_command(/test -L/).and_return(false)
