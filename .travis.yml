@@ -28,7 +28,7 @@ matrix:
   include:
     - env: CHEF_VERSION=12.5.1
       rvm: 2.3.1
-    - env: CHEF_VERSION=12.21.3
+    - env: CHEF_VERSION=12.21.1
       rvm: 2.3.1
     - env: CHEF_VERSION=13.2.20
       rvm: 2.3.1
