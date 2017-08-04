@@ -24,7 +24,6 @@ depends 'mysql2_chef_gem'
   supports os
 end
 
-
 source_url 'https://github.com/caskdata/hadoop_wrapper_cookbook' if respond_to?(:source_url)
 issues_url 'https://issues.cask.co/browse/COOK/component/10601' if respond_to?(:issues_url)
 chef_version '>= 12.5' if respond_to?(:chef_version)
