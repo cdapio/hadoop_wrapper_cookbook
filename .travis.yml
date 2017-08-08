@@ -15,6 +15,7 @@
 #
 
 language: ruby
+dist: precise
 
 before install:
   - gem install bundler
