@@ -2,7 +2,7 @@
 # Cookbook Name:: hadoop_wrapper
 # Recipe:: hive_metastore_db_init
 #
-# Copyright © 2014-2016 Cask Data, Inc.
+# Copyright © 2014-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,21 +52,37 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
 
   case db_type
   when 'mysql'
-    include_recipe 'database::mysql'
+    # Install dependency gem for the database cookbook LWRPs below
+    mysql2_chef_gem 'default' do
+      action :install
+    end
+
+    # Install mysql client libraries via the mysql cookbook LWRP
+    mysql_client 'default' do
+      action :create
+    end
+
+    # Mysql root credentials for LWRPs to create additional users/databases
     mysql_connection_info = {
-      host: 'localhost',
+      host: '127.0.0.1', # if localhost is used, the named socket must also be specified
       username: 'root',
-      password: node['mysql']['server_root_password']
+      password: node['mysql']['server_root_password'] # this must be explicitly set
     }
+
+    # database cookbook LWRP to create a named database in "remote" instance
     mysql_database db_name do
       connection mysql_connection_info
       action :create
     end
+
+    # database cookbook LWRP to create a user in "remote" instance
     mysql_database_user db_user do
       connection mysql_connection_info
       password db_pass
       action :create
     end
+
+    # database cookbook LWRP to create a user in "remote" instance
     mysql_database_user "#{db_user}-localhost" do
       connection mysql_connection_info
       username db_user
@@ -76,9 +92,12 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
       privileges [:all]
       action :grant
     end
+
+    # import hive SQL via execute resource
+    # connect via 127.0.0.1 instead of localhost to avoid using an incorrect (default) socket file
     execute 'mysql-import-hive-schema' do # ~FC009
       command <<-EOF
-        mysql --batch -D#{db_name} < $(ls -1 hive-schema-* | sort -n | tail -n 1)
+        mysql --batch -D#{db_name} -h 127.0.0.1 < $(ls -1 hive-schema-* | sort -n | tail -n 1)
         EOF
       sensitive true
       user 'root'
@@ -86,7 +105,9 @@ if node['hive'].key?('hive_site') && node['hive']['hive_site'].key?('javax.jdo.o
       cwd "#{sql_dir}/mysql"
       environment('MYSQL_PWD' => node['mysql']['server_root_password'])
     end
+
     hive_uris.each do |hive_host|
+      # database cookbook LWRP to create a user in "remote" instance
       mysql_database_user "#{db_user}-#{hive_host}" do
         connection mysql_connection_info
         username db_user
