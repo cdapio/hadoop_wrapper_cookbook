@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'hadoop_wrapper::hive_metastore_db_init' do
-  context 'on Centos 6.6 x86_64' do
+  context 'on Centos 6.7 x86_64' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.7) do |node|
         node.automatic['domain'] = 'example.com'
         node.automatic['memory']['total'] = '4099400kB'
         node.override['hive']['hive_site']['hive.metastore.uris'] = 'thrift://fauxhai.local:9083'

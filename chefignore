@@ -55,6 +55,7 @@ features/*
 Guardfile
 Procfile
 Thorfile
+vendor/**
 
 # SCM #
 #######
